@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#24343b">
+	<title>Wordwise Adventure</title>
+	<link rel="stylesheet" href="adventure.css">
+</head>
+<body>
+	<header class="game-header">
+		<a class="back-link" id="back-to-words" href="Category.html">&larr; Words</a>
+		<div class="game-brand"><span class="brand-mark" aria-hidden="true"></span>Wordwise <span>Adventure</span></div>
+		<p class="save-label" id="save-label" role="status">Progress saved on this device</p>
+	</header>
+	<main class="adventure-layout">
+		<aside class="loadout-panel" aria-label="Character and equipment">
+			<section class="panel-section character-section">
+				<div class="section-heading"><div><p class="panel-kicker">Your runner</p><h1>Character</h1></div><span class="level-badge" id="character-level">LV 1</span></div>
+				<div class="character-preview" id="character-preview" data-costume="starter" aria-label="Pixel character wearing the selected costume">
+					<div class="pixel-character" aria-hidden="true">
+						<i class="pixel-hair"></i><i class="pixel-head"></i><i class="pixel-body"></i><i class="pixel-arm"></i><i class="pixel-leg leg-one"></i><i class="pixel-leg leg-two"></i><i class="pixel-sword"></i>
+					</div>
+					<span class="preview-caption" id="costume-name">Trail clothes</span>
+				</div>
+				<label class="word-slot-label costume-label" for="costume-select">Outfit</label>
+				<select class="word-slot" id="costume-select" aria-label="Choose an unlocked outfit"></select>
+				<div class="stat-list">
+					<div class="stat-row"><span>Health</span><strong>100 HP</strong></div>
+					<div class="stat-row"><span>XP</span><strong id="xp-total">0 XP</strong></div>
+					<div class="stat-row"><span>Costume points</span><strong id="costume-points">0 / 100</strong></div>
+					<div class="stat-row"><span>Question damage</span><strong id="question-damage">33</strong></div>
+				</div>
+				<button class="small-action" id="upgrade-button" type="button">Upgrade damage · 5 XP</button>
+				<button class="small-action secondary-action" id="costume-button" type="button">Unlock costume · 100 points</button>
+				<p class="panel-note" id="upgrade-note" aria-live="polite"></p>
+			</section>
+			<section class="panel-section weapon-section" aria-labelledby="weapon-title">
+				<div class="section-heading"><div><p class="panel-kicker">Weapon desk</p><h2 id="weapon-title">Word sword</h2></div><span class="weapon-damage">10 DMG</span></div>
+				<div class="pixel-sword-display" aria-hidden="true"><span></span><i></i><b></b></div>
+				<p class="weapon-copy">Inscribed words are favored in battle questions.</p>
+				<div class="equipped-words" id="equipped-words" aria-live="polite"></div>
+				<button class="small-action secondary-action" id="add-word-slot" type="button">+ Add learned word</button>
+				<p class="learned-summary" id="learned-summary">Learn 2 words to open Level 1.</p>
+			</section>
+		</aside>
+		<div class="game-main">
+			<section class="level-panel" aria-labelledby="route-title">
+				<div class="section-heading route-heading"><div><p class="panel-kicker">World map · top view</p><h2 id="route-title">Level path</h2></div><span class="route-count" id="route-count">0 cleared</span></div>
+				<div class="map-world" id="map-world" aria-label="Top-down adventure level path">
+					<div class="map-road" aria-hidden="true"></div>
+					<div class="level-path" id="level-path"></div>
+				</div>
+				<div class="route-footer"><p class="route-hint" id="route-hint" aria-live="polite">Learn 2 words to unlock Level 1.</p><button class="game-button primary-button" id="enter-level" type="button" disabled>Enter level 1</button></div>
+			</section>
+			<footer class="game-footer"><span>Choose an open level, then enter its pixel world.</span><a href="Category.html">Return to categories</a></footer>
+		</div>
+	</main>
+	<script src="User.js" defer></script>
+	<script src="adventure-data.js" defer></script>
+	<script src="adventure.js" defer></script>
+</body>
+</html>

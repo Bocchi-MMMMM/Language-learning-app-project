@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#708069">
+	<title>Word course | Wordwise</title>
+	<style>
+		:root {
+			color-scheme: light;
+			--ink: #26332c;
+			--muted: #68736b;
+			--paper: #f5f6f1;
+			--white: #fff;
+			--accent: #4c5949;
+			--soft: #e4e9df;
+		}
+		* { box-sizing: border-box; }
+		body { min-height: 100vh; margin: 0; color: var(--ink); background: var(--paper); font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif; }
+		body[data-category="travel"] { --accent: #4c5949; --soft: #e4e9df; }
+		body[data-category="daily"] { --accent: #994d00; --soft: #fff0df; }
+		body[data-category="academic"] { --accent: #365b61; --soft: #e8f5f6; }
+		body[data-category="general"] { --accent: #831818; --soft: #f5e9e7; }
+		header { min-height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(20px, 6vw, 88px); border-bottom: 1px solid #dfe5dc; }
+		.brand { color: var(--accent); font: 700 23px Georgia, "Times New Roman", serif; }
+		a { color: var(--accent); }
+		.exit-link { padding: 10px 0 10px 14px; font-size: 14px; font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+		main { width: min(100% - 40px, 760px); margin: 0 auto; padding: 50px 0 64px; }
+		.course-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 13px; color: var(--muted); font-size: 13px; }
+		progress { width: 100%; height: 5px; display: block; margin-bottom: 36px; border: 0; border-radius: 0; color: var(--accent); background: #e3e7e0; }
+		progress::-webkit-progress-bar { background: #e3e7e0; }
+		progress::-webkit-progress-value { background: var(--accent); }
+		progress::-moz-progress-bar { background: var(--accent); }
+		.wordwise-account-bar { min-height: 42px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 5px clamp(18px, 6vw, 88px); border-bottom: 1px solid #dce3d8; color: var(--accent); background: var(--soft); font-size: 12px; }
+		.wordwise-account-actions { display: flex; align-items: center; gap: 8px; }
+		.wordwise-account-actions button { min-height: 30px; padding: 0 10px; border: 1px solid var(--accent); border-radius: 3px; color: var(--accent); background: transparent; font: inherit; font-weight: 700; cursor: pointer; }
+		.wordwise-account-actions button:hover { color: #fff; background: var(--accent); }
+		.wordwise-account-actions button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.lesson { min-height: 390px; padding: clamp(24px, 5vw, 48px); border: 1px solid #dfe5dc; background: var(--white); animation: arrive 300ms ease-out both; }
+		.eyebrow { margin: 0 0 14px; color: var(--accent); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+		h1 { margin: 0 0 8px; color: var(--accent); font: 400 56px/1.08 Georgia, "Times New Roman", serif; overflow-wrap: anywhere; }
+		.meaning { margin: 0; color: var(--muted); font-size: 17px; }
+		.lesson h2 { margin: 28px 0 0; color: var(--ink); font: 400 24px Georgia, "Times New Roman", serif; }
+		.lesson-copy { max-width: 580px; margin: 28px 0 0; font-size: 16px; line-height: 1.75; }
+		.pinyin { margin: 22px 0 0; color: var(--accent); font: 400 30px Georgia, "Times New Roman", serif; }
+		.character-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 24px; }
+		.character-card { padding: 16px; border-left: 2px solid var(--accent); background: var(--soft); }
+		.character-card h3 { margin: 0 0 8px; color: var(--accent); font: 400 38px Georgia, "Times New Roman", serif; }
+		.character-meaning { margin: 0; font-size: 14px; font-weight: 700; }
+		.character-story { margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+		.pronunciation-button, .nav-button, .return-button { min-height: 44px; padding: 0 18px; border: 1px solid var(--accent); border-radius: 3px; color: var(--white); background: var(--accent); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+		.pronunciation-button { margin-top: 26px; }
+		.pronunciation-button:hover, .nav-button:hover, .return-button:hover { filter: brightness(1.12); }
+		.pronunciation-button:focus-visible, .nav-button:focus-visible, .return-button:focus-visible, .exit-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+		.spelling-count { margin: 26px 0 12px; color: var(--muted); font-size: 14px; }
+		.letter-sequence { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+		.letter-sequence li { width: 38px; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid #dfe5dc; color: var(--accent); background: var(--soft); font: 600 18px Georgia, "Times New Roman", serif; }
+		.lesson-note { margin-top: 20px; padding-left: 14px; border-left: 2px solid var(--accent); color: var(--muted); font-size: 14px; line-height: 1.6; }
+		.course-navigation { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; }
+		.nav-button.secondary { color: var(--accent); background: transparent; }
+		.nav-button:disabled { opacity: 0.4; cursor: not-allowed; }
+		.completion { padding: 48px clamp(24px, 5vw, 52px); border: 1px solid #dfe5dc; background: var(--white); text-align: center; }
+		.completion h1 { font-size: 52px; }
+		.completion p { margin: 14px 0 26px; color: var(--muted); line-height: 1.6; }
+		[hidden] { display: none !important; }
+		@keyframes arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+		@media (max-width: 520px) { header { min-height: 64px; padding: 0 18px; } .wordwise-account-bar { padding: 5px 16px; } .wordwise-account-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } main { width: min(100% - 32px, 440px); padding-top: 34px; } progress { margin-bottom: 24px; } .lesson { min-height: 350px; } h1 { font-size: 44px; } .completion h1 { font-size: 42px; } }
+		@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+	</style>
+</head>
+<body data-category="general">
+	<header>
+		<div class="brand">Wordwise</div>
+		<a class="exit-link" id="exit-course" href="Category.html">Exit course</a>
+	</header>
+	<main>
+		<div id="course-view">
+			<div class="course-meta"><span id="course-category"></span><span id="step-count"></span></div>
+			<progress id="course-progress" max="4" value="1" aria-label="Course progress"></progress>
+			<section class="lesson" id="lesson" aria-live="polite">
+				<p class="eyebrow" id="lesson-point"></p>
+				<h1 id="lesson-word" lang="zh-Hans"></h1>
+				<p class="meaning" id="lesson-meaning"></p>
+				<h2 id="lesson-title"></h2>
+				<div id="lesson-content"></div>
+			</section>
+			<nav class="course-navigation" aria-label="Course steps">
+				<button class="nav-button secondary" id="previous-step" type="button">Previous</button>
+				<button class="nav-button" id="next-step" type="button">Next</button>
+			</nav>
+		</div>
+		<section class="completion" id="course-complete" aria-live="polite" hidden>
+			<p class="eyebrow">Course complete</p>
+			<h1 id="complete-word" lang="zh-Hans"></h1>
+			<p id="complete-meaning"></p>
+			<p>This course is now in your finished courses list.</p>
+			<a class="return-button" id="return-to-words" href="Category.html" style="display:inline-flex;align-items:center;text-decoration:none">Back to words</a>
+		</section>
+		<p id="course-error" role="alert" hidden>This course could not be opened. Return to the category page and choose a word.</p>
+	</main>
+	<script src="User.js" defer></script>
+	<script src="course.js" defer></script>
+</body>
+</html>

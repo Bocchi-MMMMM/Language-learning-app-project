@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f5f6f1">
+	<title>Choose a category | Wordwise</title>
+	<style>
+		:root {
+			color-scheme: light;
+			--ink: #26332c;
+			--muted: #68736b;
+			--paper: #f5f6f1;
+			--green: #708069;
+			--orange: #c47b3e;
+			--blue: #b0d1d2;
+			--red: #ad625e;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			min-height: 100vh;
+			margin: 0;
+			color: var(--ink);
+			background-color: var(--paper);
+			background-image: radial-gradient(#70806916 0.8px, transparent 0.8px);
+			background-size: 20px 20px;
+			font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+		}
+
+		main {
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			padding: 48px 24px;
+		}
+
+		.content {
+			width: min(100%, 880px);
+			text-align: center;
+			animation: arrive 650ms ease-out both;
+		}
+
+		.eyebrow {
+			margin: 0 0 14px;
+			color: var(--green);
+			font-size: 12px;
+			font-weight: 700;
+			letter-spacing: 0.14em;
+			text-transform: uppercase;
+		}
+
+		h1 {
+			margin: 0;
+			font-family: Georgia, "Times New Roman", serif;
+			font-size: clamp(56px, 9vw, 88px);
+			font-weight: 400;
+			line-height: 1;
+		}
+
+		.intro {
+			margin: 20px auto 46px;
+			color: var(--muted);
+			font-size: 17px;
+			line-height: 1.6;
+		}
+
+		.categories {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 16px;
+			text-align: left;
+		}
+
+		.category {
+			min-height: 126px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 20px;
+			padding: 24px 26px;
+			border: 1px solid transparent;
+			border-radius: 4px;
+			color: var(--ink);
+			font: inherit;
+			font-size: 20px;
+			font-weight: 600;
+			text-align: left;
+			cursor: pointer;
+			transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+		}
+
+		.category:hover { transform: translateY(-2px); }
+		.category:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+		.category[aria-pressed="true"] {
+			border-color: var(--ink);
+			box-shadow: inset 0 0 0 1px var(--ink);
+		}
+
+		.category span:last-child {
+			font-size: 23px;
+			font-weight: 400;
+			opacity: 0.7;
+		}
+
+		.travel { background: #e4e9df; }
+		.daily { background: #f0e5d9; }
+		.academic { background: #dfebeb; }
+		.open { background: #eee1df; }
+
+		.status {
+			min-height: 24px;
+			margin: 22px 0 0;
+			color: var(--muted);
+			font-size: 14px;
+		}
+
+		.wordwise-account-bar {
+			min-height: 42px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			padding: 5px clamp(18px, 6vw, 88px);
+			border-bottom: 1px solid #dce3d8;
+			color: var(--green-dark);
+			background: #e4e9df;
+			font-size: 12px;
+		}
+		.wordwise-account-actions { display: flex; align-items: center; gap: 8px; }
+		.wordwise-account-actions button { min-height: 30px; padding: 0 10px; border: 1px solid var(--green-dark); border-radius: 3px; color: var(--green-dark); background: transparent; font: inherit; font-weight: 700; cursor: pointer; }
+		.wordwise-account-actions button:hover { color: #fff; background: var(--green-dark); }
+		.wordwise-account-actions button:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 2px; }
+
+		@keyframes arrive {
+			from { opacity: 0; transform: translateY(10px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		@media (max-width: 600px) {
+			main { padding: 40px 20px; }
+			.wordwise-account-bar { padding: 5px 16px; }
+			.wordwise-account-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+			.intro { margin-bottom: 32px; font-size: 16px; }
+			.categories { grid-template-columns: 1fr; gap: 12px; }
+			.category { min-height: 88px; padding: 20px 22px; font-size: 18px; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after {
+				animation-duration: 0.01ms !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<section class="content" aria-labelledby="page-title">
+			<p class="eyebrow">Build your vocabulary</p>
+			<h1 id="page-title">Category</h1>
+			<p class="intro">Choose the category of words you want to learn first.</p>
+
+			<div class="categories" role="group" aria-label="Choose a word category">
+				<button class="category travel" type="button" aria-pressed="false">
+					<span>Travelling</span><span aria-hidden="true">↗</span>
+				</button>
+				<button class="category daily" type="button" aria-pressed="false">
+					<span>Daily communication</span><span aria-hidden="true">↗</span>
+				</button>
+				<button class="category academic" type="button" aria-pressed="false">
+					<span>Academic</span><span aria-hidden="true">↗</span>
+				</button>
+				<button class="category open" type="button" aria-pressed="false">
+					<span>No specification</span><span aria-hidden="true">↗</span>
+				</button>
+			</div>
+			<p class="status" aria-live="polite"></p>
+		</section>
+	</main>
+	<script>
+		const categoryButtons = document.querySelectorAll(".category");
+		const categoryPages = new Map([
+			["Travelling", "travelling.html"],
+			["Daily communication", "daily.html"],
+			["Academic", "academic.html"],
+			["No specification", "no.html"]
+		]);
+
+		categoryButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const label = button.querySelector("span").textContent;
+				const page = categoryPages.get(label);
+				if (page) {
+					try {
+						const progressKey = window.wordwiseProgressStorageKey;
+						if (progressKey) {
+							const progress = JSON.parse(localStorage.getItem(progressKey) || "{}") || {};
+							localStorage.setItem(progressKey, JSON.stringify({ ...progress, category: label }));
+						}
+					} catch {}
+					window.location.assign(page);
+				}
+			});
+		});
+	</script>
+	<script src="User.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#a8d1c3">
+	<title>Adventure level | Wordwise</title>
+	<link rel="stylesheet" href="adventure-level.css">
+</head>
+<body>
+	<header class="game-header">
+		<a class="back-link" id="map-link" href="adventure.html">&larr; Level map</a>
+		<div class="game-brand"><span class="brand-mark" aria-hidden="true"></span>Wordwise <span>Adventure</span></div>
+		<p class="save-label" id="save-label" role="status">Progress saved on this device</p>
+	</header>
+	<main class="level-shell">
+		<section class="level-hud" aria-label="Level status">
+			<div><p class="panel-kicker" id="world-kicker">Mosswood Trail</p><h1 id="level-title">Level 1</h1></div>
+			<div class="battle-hud">
+				<div class="health-group"><span class="hud-label">YOU</span><div class="health-track"><span id="player-health-bar"></span></div><strong id="player-health-text">100 / 100</strong></div>
+				<div class="enemy-health-group" id="enemy-health-group" hidden><span class="hud-label" id="enemy-label">MONSTER</span><div class="health-track enemy-track"><span id="enemy-health-bar"></span></div><strong id="enemy-health-text"></strong></div>
+			</div>
+		</section>
+		<section class="game-frame" aria-label="Pixel adventure level">
+			<div class="pixel-scene" id="pixel-scene" data-world="mosswood">
+				<div class="game-world" id="game-world">
+					<div class="world-sun"></div><div class="world-cloud cloud-one"></div><div class="world-cloud cloud-two"></div>
+					<div class="world-hills hills-back"></div><div class="world-hills hills-front"></div>
+					<div class="world-ground"></div><div class="world-track"></div>
+					<div class="world-details" id="world-details" aria-hidden="true"></div>
+					<div class="world-obstacles" id="world-obstacles"></div>
+					<div class="world-enemies" id="world-enemies"></div>
+					<div class="world-player" id="world-player" data-costume="starter" aria-label="Your pixel character">
+						<i class="pixel-hair"></i><i class="pixel-head"></i><i class="pixel-body"></i><i class="pixel-arm"></i><i class="pixel-leg leg-one"></i><i class="pixel-leg leg-two"></i><i class="pixel-sword"></i>
+					</div>
+					<div class="world-marker" id="world-marker">LEVEL 1</div>
+				</div>
+			<div class="question-pause" id="question-pause" hidden>
+				<section class="battle-quiz" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+					<div class="quiz-topline"><span class="panel-kicker" id="quiz-kind">Word challenge</span><span id="quiz-progress"></span></div>
+					<h2 id="quiz-title"></h2><p class="quiz-prompt" id="quiz-prompt"></p>
+					<div class="answer-list" id="answer-list"></div><p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+				</section>
+			</div>
+		</section>
+		<p class="run-message" id="run-message" role="status" aria-live="polite">Press Start to begin running.</p>
+		<div class="run-controls">
+			<button class="game-button primary-button" id="start-button" type="button">Start running</button>
+			<button class="game-button" id="jump-button" type="button" hidden>Jump · Space / ↑</button>
+			<button class="game-button attack-button" id="attack-button" type="button" hidden>Attack · J</button>
+			<button class="game-button" id="retry-button" type="button" hidden>Try again</button>
+			<span class="keyboard-hint">Auto-run · jump obstacles · J to attack</span>
+		</div>
+	</main>
+	<script src="User.js" defer></script>
+	<script src="adventure-data.js" defer></script>
+	<script src="adventure-level.js" defer></script>
+</body>
+</html>

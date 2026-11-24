@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#708069">
+	<title>Travelling | Wordwise</title>
+	<link rel="stylesheet" href="study.css">
+	<style>
+		:root {
+			color-scheme: light;
+			--green: #708069;
+			--green-dark: #4c5949;
+			--green-pale: #e4e9df;
+			--ink: #2d332d;
+			--paper: #f6f7f3;
+			--white: #fff;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			min-height: 100vh;
+			margin: 0;
+			color: var(--ink);
+			background: var(--paper);
+			font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+		}
+
+		.site-header {
+			position: relative;
+			z-index: 2;
+			min-height: 76px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 clamp(20px, 6vw, 88px);
+			border-bottom: 1px solid #e3e7df;
+			background: var(--paper);
+		}
+
+		.brand {
+			color: var(--green-dark);
+			font-family: Georgia, "Times New Roman", serif;
+			font-size: 24px;
+			font-weight: 700;
+		}
+
+		.category-control { position: relative; display: flex; align-items: center; gap: 8px; }
+		.adventure-link { min-height: 42px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid var(--green-dark); border-radius: 3px; color: var(--green-dark); font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+		.adventure-link:hover { color: var(--white); background: var(--green-dark); }
+		.adventure-link:focus-visible { outline: 3px solid #aeb9a8; outline-offset: 3px; }
+
+		.category-toggle {
+			min-height: 42px;
+			display: inline-flex;
+			align-items: center;
+			gap: 12px;
+			padding: 0 15px;
+			border: 1px solid var(--green);
+			border-radius: 3px;
+			color: var(--green-dark);
+			background: transparent;
+			font: inherit;
+			font-size: 14px;
+			font-weight: 700;
+			cursor: pointer;
+		}
+
+		.category-toggle:hover,
+		.category-toggle[aria-expanded="true"] { color: var(--white); background: var(--green); }
+		.category-toggle:focus-visible, .category-menu a:focus-visible { outline: 3px solid #aeb9a8; outline-offset: 3px; }
+
+		.chevron {
+			width: 7px;
+			height: 7px;
+			border-right: 1.5px solid currentColor;
+			border-bottom: 1.5px solid currentColor;
+			transform: rotate(45deg) translateY(-2px);
+			transition: transform 160ms ease;
+		}
+
+		.category-toggle[aria-expanded="true"] .chevron { transform: rotate(225deg) translate(-2px, -1px); }
+
+		.category-menu {
+			position: absolute;
+			top: calc(100% + 9px);
+			right: 0;
+			width: 230px;
+			padding: 6px;
+			border: 1px solid #e3e7df;
+			border-radius: 4px;
+			background: var(--white);
+			box-shadow: 0 12px 30px #2d332d18;
+		}
+
+		.category-menu[hidden] { display: none; }
+
+		.category-menu a {
+			display: block;
+			padding: 12px 13px;
+			border-radius: 2px;
+			color: var(--ink);
+			font-size: 14px;
+			text-decoration: none;
+		}
+
+		.category-menu a:hover { color: var(--green-dark); background: var(--green-pale); }
+
+		main {
+			width: min(100% - 40px, 1040px);
+			margin: 0 auto;
+			padding: 46px 0 64px;
+		}
+
+		.page-heading {
+			margin: 0 0 28px;
+			color: var(--green-dark);
+			font-family: Georgia, "Times New Roman", serif;
+			font-size: 34px;
+			font-weight: 400;
+		}
+
+		.word-grid {
+			display: grid;
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+			gap: 16px;
+		}
+
+		.word-search { width: min(100%, 440px); margin-bottom: 10px; }
+		.word-search input {
+			width: 100%;
+			min-height: 48px;
+			padding: 0 14px;
+			border: 1px solid #b8c0b3;
+			border-radius: 3px;
+			color: var(--ink);
+			background: var(--white);
+			font: inherit;
+			font-size: 15px;
+		}
+		.word-search input:focus-visible { outline: 3px solid #aeb9a8; outline-offset: 2px; }
+		.search-status { min-height: 20px; margin: 0 0 20px; color: #68736b; font-size: 14px; }
+
+		@keyframes appear {
+			from { opacity: 0; transform: translateY(8px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		@media (max-width: 760px) {
+			.word-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+		}
+
+		@media (max-width: 480px) {
+			.site-header { min-height: 66px; padding: 0 18px; }
+			.brand { font-size: 21px; }
+			.category-control { gap: 4px; }
+			.adventure-link { min-height: 38px; padding: 0 8px; font-size: 12px; }
+			.category-toggle { gap: 8px; padding: 0 10px; }
+			main { width: min(100% - 32px, 400px); padding-top: 32px; }
+			.page-heading { margin-bottom: 20px; font-size: 29px; }
+			.word-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+		}
+	</style>
+</head>
+<body data-category="travel">
+	<header class="site-header">
+		<div class="brand">Wordwise</div>
+		<div class="category-control">
+			<a class="adventure-link" href="adventure.html?category=travel">Adventure</a>
+			<button class="category-toggle" id="category-toggle" type="button" aria-expanded="false" aria-controls="category-menu">
+				Category <span class="chevron" aria-hidden="true"></span>
+			</button>
+			<nav class="category-menu" id="category-menu" aria-label="Categories" hidden>
+				<a href="travelling.html" aria-current="page">Travelling</a>
+				<a href="no.html">No specification</a>
+				<a href="daily.html">Daily communication</a>
+				<a href="academic.html">Academic</a>
+			</nav>
+		</div>
+	</header>
+	<main>
+		<h1 class="page-heading">Travelling</h1>
+		<div class="study-layout">
+			<section class="study-main" aria-label="Travel vocabulary">
+				<div class="word-search">
+					<label class="visually-hidden" for="word-search">Search vocabulary</label>
+					<input id="word-search" type="search" placeholder="Search vocabulary" autocomplete="off" aria-controls="word-grid">
+				</div>
+				<p class="search-status" id="vocabulary-status" role="status" aria-live="polite"></p>
+				<section class="word-grid" id="word-grid" aria-label="Travel vocabulary"></section>
+			</section>
+			<aside class="learned-sidebar" aria-labelledby="learned-title">
+				<div class="learned-header"><h2 id="learned-title">Learned words</h2><span class="learned-count" id="learned-count">0</span></div>
+				<ul class="learned-list" id="learned-list"></ul>
+				<p class="learned-empty" id="learned-empty">Words you open will appear here.</p>
+				<section class="finished-courses" aria-labelledby="finished-course-title">
+					<div class="finished-courses-header"><h3 id="finished-course-title">Finished courses</h3><span class="learned-count" id="finished-course-count">0</span></div>
+					<ul class="finished-course-list" id="finished-course-list"></ul>
+					<p class="finished-course-empty" id="finished-course-empty">Completed courses will appear here.</p>
+				</section>
+			</aside>
+		</div>
+	</main>
+	<script>
+		const categoryToggle = document.querySelector("#category-toggle");
+		const categoryMenu = document.querySelector("#category-menu");
+
+		categoryToggle.addEventListener("click", () => {
+			const isExpanded = categoryToggle.getAttribute("aria-expanded") === "true";
+			categoryToggle.setAttribute("aria-expanded", String(!isExpanded));
+			categoryMenu.hidden = isExpanded;
+		});
+
+		document.addEventListener("click", (event) => {
+			if (!event.target.closest(".category-control")) {
+				categoryToggle.setAttribute("aria-expanded", "false");
+				categoryMenu.hidden = true;
+			}
+		});
+
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape") {
+				categoryToggle.setAttribute("aria-expanded", "false");
+				categoryMenu.hidden = true;
+				categoryToggle.focus();
+			}
+		});
+	</script>
+	<script src="User.js" defer></script>
+	<script src="flipcard.js" defer></script>
+	<script src="changeC.js" defer></script>
+</body>
+</html>
